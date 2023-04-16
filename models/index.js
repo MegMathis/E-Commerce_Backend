@@ -13,7 +13,6 @@ const ProductTag = require("./ProductTag");
 // the parent record is deleted.  Helps with consistency of DB
 Product.belongsTo(Category, {
   foreignKey: "category_id",
-  onDelete: "SET NULL",
 });
 
 // Categories have many Products
@@ -28,7 +27,6 @@ Product.belongsToMany(Tag, {
   through: ProductTag,
   as: "tags",
   foreignKey: "product_id",
-  onDelete: "SET NULL",
 });
 
 // Tags belongToMany Products (through ProductTag)
@@ -36,7 +34,6 @@ Tag.belongsToMany(Product, {
   through: ProductTag,
   as: "products",
   foreignKey: "tag_id",
-  onDelete: "SET NULL",
 });
 
 module.exports = {
