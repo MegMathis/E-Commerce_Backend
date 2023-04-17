@@ -54,14 +54,30 @@ router.put("/:id", async (req, res) => {
   res.send(updateCategory);
 });
 
-router.delete("/:id", async (req, res) => {
+// async not working
+// router.delete("/:id", async (req, res) => {
+//   // delete a category by its `id` value
+//   const categoryDelete = await Category.destroy({
+//     where: {
+//       id: req.params.id,
+//     },
+//   });
+//   res.status(categoryDelete);
+// });
+
+router.delete("/:id", (req, res) => {
   // delete a category by its `id` value
-  const categoryDelete = await Category.destroy({
+  Category.destroy({
     where: {
       id: req.params.id,
     },
-  });
-  res.send(categoryDelete);
+  })
+    .then((categoryDelete) => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      res.status(500).send({ error: "Did not delete category " + err });
+    });
 });
 
 module.exports = router;
